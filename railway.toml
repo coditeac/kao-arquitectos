@@ -1,9 +1,8 @@
-# Railway native deploy config (no GitHub Actions).
-# Production environment should track the GitHub `main` branch via Railway's
-# GitHub integration in the dashboard / CLI — not CI workflows.
+# Railway native deploy (GitHub main → production). No GitHub Actions.
+# Builder RAILPACK; Node version from package.json engines / .node-version.
 
 [build]
-builder = "NIXPACKS"
+builder = "RAILPACK"
 buildCommand = "npm run build"
 
 [deploy]
