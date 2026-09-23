@@ -1,18 +1,18 @@
 import type { Metadata } from "next";
-import { Cormorant_Garamond, Outfit } from "next/font/google";
+import { Fraunces, Sora } from "next/font/google";
 import { SiteFooter } from "@/components/site-footer";
 import { SiteHeader } from "@/components/site-header";
 import { siteConfig } from "@/lib/content";
 import { createMetadata, localBusinessJsonLd } from "@/lib/seo";
 import "./globals.css";
 
-const outfit = Outfit({
+const sora = Sora({
   variable: "--font-sans",
   subsets: ["latin"],
   display: "swap",
 });
 
-const cormorant = Cormorant_Garamond({
+const fraunces = Fraunces({
   variable: "--font-display",
   subsets: ["latin"],
   weight: ["400", "500", "600"],
@@ -37,11 +37,8 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
   const jsonLd = localBusinessJsonLd();
 
   return (
-    <html
-      lang="es-MX"
-      className={`${outfit.variable} ${cormorant.variable} h-full`}
-    >
-      <body className="min-h-full flex flex-col font-sans">
+    <html lang="es-MX" className={`${sora.variable} ${fraunces.variable} h-full`}>
+      <body className="flex min-h-full flex-col font-sans">
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}

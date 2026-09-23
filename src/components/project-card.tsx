@@ -6,33 +6,55 @@ import { cn } from "@/lib/utils";
 export function ProjectCard({
   project,
   priority = false,
+  index,
   className,
+  featured = false,
 }: {
   project: Project;
   priority?: boolean;
+  index?: number;
   className?: string;
+  featured?: boolean;
 }) {
   return (
     <article className={cn("group", className)}>
       <Link href={`/proyectos/${project.slug}`} className="block">
-        <div className="relative aspect-[4/5] overflow-hidden bg-[var(--mist)]">
+        <div
+          className={cn(
+            "relative overflow-hidden bg-[var(--mist)]",
+            featured ? "aspect-[16/10]" : "aspect-[4/5]"
+          )}
+        >
           <Image
             src={project.coverImage}
             alt={`${project.title} — ${project.location}`}
             fill
             priority={priority}
             sizes="(max-width: 768px) 100vw, 50vw"
-            className="object-cover transition-transform duration-700 ease-out group-hover:scale-[1.04]"
+            className="object-cover transition-transform duration-[900ms] ease-out group-hover:scale-[1.035]"
           />
-          <div className="absolute inset-0 bg-gradient-to-t from-black/45 via-transparent to-transparent opacity-80" />
-          <div className="absolute inset-x-0 bottom-0 p-5 text-[var(--paper)] md:p-6">
-            <p className="text-[0.7rem] tracking-[0.16em] uppercase opacity-80">
-              {project.typology} · {project.year}
-            </p>
-            <h3 className="mt-1 font-display text-2xl md:text-3xl">{project.title}</h3>
-            <p className="mt-1 text-sm opacity-80">{project.location}</p>
-          </div>
         </div>
+        <div className="mt-4 flex items-start justify-between gap-4">
+          <div>
+            {typeof index === "number" ? (
+              <p className="label-micro mb-2">
+                {String(index + 1).padStart(2, "0")}
+              </p>
+            ) : null}
+            <h3 className="font-display text-2xl leading-none md:text-[1.85rem]">
+              {project.title}
+            </h3>
+            <p className="mt-2 text-sm text-[var(--quiet)]">
+              {project.location}
+            </p>
+          </div>
+          <p className="shrink-0 pt-1 text-[0.68rem] tracking-[0.16em] uppercase text-[var(--quiet)]">
+            {project.year}
+          </p>
+        </div>
+        <p className="mt-3 max-w-md text-sm leading-relaxed text-[var(--quiet)]">
+          {project.summary}
+        </p>
       </Link>
     </article>
   );

@@ -30,22 +30,24 @@ export default async function ProyectoDetailPage({ params }: Props) {
   const related = projects.filter((p) => p.slug !== project.slug).slice(0, 2);
 
   return (
-    <article className="pt-24 md:pt-28">
-      <header className="mx-auto max-w-7xl px-5 md:px-8">
+    <article className="pt-28 md:pt-32">
+      <header className="mx-auto max-w-[90rem] px-5 md:px-10">
         <Link
           href="/proyectos"
-          className="text-sm text-[var(--quiet)] underline-offset-4 hover:underline"
+          className="text-[0.72rem] tracking-[0.18em] uppercase text-[var(--quiet)] underline-offset-4 hover:underline"
         >
           ← Proyectos
         </Link>
-        <h1 className="mt-6 font-display text-5xl md:text-7xl">{project.title}</h1>
-        <p className="mt-4 text-[var(--quiet)]">
+        <h1 className="mt-8 font-display text-[clamp(2.8rem,7vw,6rem)] leading-[0.95]">
+          {project.title}
+        </h1>
+        <p className="mt-5 text-sm tracking-wide text-[var(--quiet)]">
           {project.location} · {project.year} · {project.typology} · {project.area}
         </p>
-        <p className="mt-6 max-w-2xl text-lg leading-relaxed">{project.summary}</p>
+        <p className="mt-8 max-w-2xl text-lg leading-relaxed">{project.summary}</p>
       </header>
 
-      <div className="relative mt-12 aspect-[16/10] w-full overflow-hidden bg-[var(--mist)]">
+      <div className="relative mt-14 aspect-[16/9] w-full overflow-hidden bg-[var(--mist)] md:aspect-[21/9]">
         <Image
           src={project.coverImage}
           alt={project.title}
@@ -56,28 +58,23 @@ export default async function ProyectoDetailPage({ params }: Props) {
         />
       </div>
 
-      <section className="mx-auto grid max-w-7xl gap-12 px-5 py-16 md:grid-cols-3 md:gap-10 md:px-8 md:py-24">
+      {/* Telescope-like meta trio */}
+      <section className="mx-auto grid max-w-[90rem] gap-12 border-b border-[var(--line)] px-5 py-20 md:grid-cols-3 md:gap-10 md:px-10 md:py-24">
         <div>
-          <h2 className="text-[0.7rem] tracking-[0.18em] uppercase text-[var(--quiet)]">
-            Reto
-          </h2>
-          <p className="mt-3 leading-relaxed">{project.challenge}</p>
+          <h2 className="label-micro">Reto</h2>
+          <p className="mt-4 leading-relaxed">{project.challenge}</p>
         </div>
         <div>
-          <h2 className="text-[0.7rem] tracking-[0.18em] uppercase text-[var(--quiet)]">
-            Enfoque
-          </h2>
-          <p className="mt-3 leading-relaxed">{project.approach}</p>
+          <h2 className="label-micro">Enfoque</h2>
+          <p className="mt-4 leading-relaxed">{project.approach}</p>
         </div>
         <div>
-          <h2 className="text-[0.7rem] tracking-[0.18em] uppercase text-[var(--quiet)]">
-            Resultado
-          </h2>
-          <p className="mt-3 leading-relaxed">{project.result}</p>
+          <h2 className="label-micro">Resultado</h2>
+          <p className="mt-4 leading-relaxed">{project.result}</p>
         </div>
       </section>
 
-      <section className="mx-auto grid max-w-7xl gap-4 px-5 pb-20 md:grid-cols-2 md:px-8">
+      <section className="mx-auto grid max-w-[90rem] gap-3 px-5 py-10 md:grid-cols-2 md:px-10 md:py-14">
         {project.gallery.map((src, i) => (
           <div key={src} className="relative aspect-[4/3] overflow-hidden bg-[var(--mist)]">
             <Image
@@ -92,11 +89,11 @@ export default async function ProyectoDetailPage({ params }: Props) {
       </section>
 
       {related.length > 0 ? (
-        <section className="border-t border-[var(--line)] bg-[var(--mist)]/40">
-          <div className="mx-auto max-w-7xl px-5 py-16 md:px-8">
-            <h2 className="font-display text-3xl">Más proyectos</h2>
-            <div className="mt-8 grid gap-6 md:grid-cols-2">
-              {related.map((p) => (
+        <section className="border-t border-[var(--line)] bg-[var(--mist)]/30">
+          <div className="mx-auto max-w-[90rem] px-5 py-20 md:px-10">
+            <h2 className="font-display text-3xl md:text-4xl">Más proyectos</h2>
+            <div className="mt-10 grid gap-10 md:grid-cols-2">
+              {related.map((p, i) => (
                 <Link key={p.slug} href={`/proyectos/${p.slug}`} className="group block">
                   <div className="relative aspect-[16/10] overflow-hidden bg-[var(--mist)]">
                     <Image
@@ -107,8 +104,11 @@ export default async function ProyectoDetailPage({ params }: Props) {
                       className="object-cover transition-transform duration-700 group-hover:scale-[1.03]"
                     />
                   </div>
-                  <p className="mt-3 font-display text-2xl">{p.title}</p>
-                  <p className="text-sm text-[var(--quiet)]">{p.location}</p>
+                  <p className="label-micro mt-4">
+                    {String(i + 1).padStart(2, "0")}
+                  </p>
+                  <p className="mt-2 font-display text-2xl">{p.title}</p>
+                  <p className="mt-1 text-sm text-[var(--quiet)]">{p.location}</p>
                 </Link>
               ))}
             </div>

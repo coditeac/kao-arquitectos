@@ -37,9 +37,6 @@ const emptyValues: FormValues = {
   message: "",
 };
 
-const fieldClass =
-  "h-11 w-full rounded-none border border-[var(--line)] bg-[var(--paper)] px-2.5 text-sm outline-none transition-colors placeholder:text-muted-foreground focus-visible:border-ring focus-visible:ring-3 focus-visible:ring-ring/50 aria-invalid:border-destructive aria-invalid:ring-3 aria-invalid:ring-destructive/20";
-
 function validate(values: FormValues): FieldErrors {
   const errors: FieldErrors = {};
   if (values.name.trim().length < 2) errors.name = "Indica tu nombre completo.";
@@ -101,15 +98,15 @@ export function ContactForm() {
   if (status === "success") {
     return (
       <div
-        className="border border-[var(--line)] bg-[var(--mist)] px-6 py-10 animate-fade-in"
+        className="border-t border-[var(--line)] pt-10 animate-fade-in"
         role="status"
         aria-live="polite"
       >
-        <p className="font-display text-2xl text-[var(--ink)]">Mensaje recibido</p>
-        <p className="mt-3 max-w-md text-sm leading-relaxed text-[var(--quiet)]">
-          Gracias por escribirnos. Revisamos cada consulta con calma y te contactamos en
-          horario de estudio ({siteConfig.contact.hours}). Si prefieres, también puedes
-          escribirnos por{" "}
+        <p className="font-display text-3xl text-[var(--ink)]">Mensaje recibido</p>
+        <p className="mt-4 max-w-md text-sm leading-relaxed text-[var(--quiet)]">
+          Gracias por escribirnos. Revisamos cada consulta con calma y te
+          contactamos en horario de estudio ({siteConfig.contact.hours}). También
+          puedes escribirnos por{" "}
           <a
             href={siteConfig.contact.whatsappHref}
             className="underline underline-offset-4"
@@ -122,7 +119,7 @@ export function ContactForm() {
         </p>
         <button
           type="button"
-          className="mt-6 text-sm underline underline-offset-4"
+          className="mt-8 text-[0.72rem] tracking-[0.18em] uppercase underline underline-offset-8"
           onClick={() => setStatus("idle")}
         >
           Enviar otro mensaje
@@ -132,10 +129,12 @@ export function ContactForm() {
   }
 
   return (
-    <form onSubmit={onSubmit} noValidate className="space-y-6">
-      <div className="grid gap-6 md:grid-cols-2">
+    <form onSubmit={onSubmit} noValidate className="space-y-8">
+      <div className="grid gap-8 md:grid-cols-2">
         <div className="space-y-2">
-          <Label htmlFor="name">Nombre</Label>
+          <Label htmlFor="name" className="label-micro font-normal">
+            Nombre
+          </Label>
           <input
             id="name"
             name="name"
@@ -143,19 +142,18 @@ export function ContactForm() {
             value={values.name}
             onChange={(e) => update("name", e.target.value)}
             aria-invalid={!!errors.name}
-            aria-describedby={errors.name ? "name-error" : undefined}
-            className={fieldClass}
+            className={cn("input-line", errors.name && "border-destructive")}
             placeholder="Tu nombre"
           />
           {errors.name ? (
-            <p id="name-error" className="text-sm text-destructive">
-              {errors.name}
-            </p>
+            <p className="text-sm text-destructive">{errors.name}</p>
           ) : null}
         </div>
 
         <div className="space-y-2">
-          <Label htmlFor="email">Correo</Label>
+          <Label htmlFor="email" className="label-micro font-normal">
+            Correo
+          </Label>
           <input
             id="email"
             name="email"
@@ -164,21 +162,20 @@ export function ContactForm() {
             value={values.email}
             onChange={(e) => update("email", e.target.value)}
             aria-invalid={!!errors.email}
-            aria-describedby={errors.email ? "email-error" : undefined}
-            className={fieldClass}
+            className={cn("input-line", errors.email && "border-destructive")}
             placeholder="tu@correo.com"
           />
           {errors.email ? (
-            <p id="email-error" className="text-sm text-destructive">
-              {errors.email}
-            </p>
+            <p className="text-sm text-destructive">{errors.email}</p>
           ) : null}
         </div>
       </div>
 
-      <div className="grid gap-6 md:grid-cols-2">
+      <div className="grid gap-8 md:grid-cols-2">
         <div className="space-y-2">
-          <Label htmlFor="phone">Teléfono / WhatsApp</Label>
+          <Label htmlFor="phone" className="label-micro font-normal">
+            Teléfono / WhatsApp
+          </Label>
           <input
             id="phone"
             name="phone"
@@ -187,27 +184,25 @@ export function ContactForm() {
             value={values.phone}
             onChange={(e) => update("phone", e.target.value)}
             aria-invalid={!!errors.phone}
-            aria-describedby={errors.phone ? "phone-error" : undefined}
-            className={fieldClass}
+            className={cn("input-line", errors.phone && "border-destructive")}
             placeholder="+52 951 000 0000"
           />
           {errors.phone ? (
-            <p id="phone-error" className="text-sm text-destructive">
-              {errors.phone}
-            </p>
+            <p className="text-sm text-destructive">{errors.phone}</p>
           ) : null}
         </div>
 
         <div className="space-y-2">
-          <Label htmlFor="interest">Interés</Label>
+          <Label htmlFor="interest" className="label-micro font-normal">
+            Interés
+          </Label>
           <select
             id="interest"
             name="interest"
             value={values.interest}
             onChange={(e) => update("interest", e.target.value)}
             aria-invalid={!!errors.interest}
-            aria-describedby={errors.interest ? "interest-error" : undefined}
-            className={fieldClass}
+            className={cn("input-line", errors.interest && "border-destructive")}
           >
             <option value="" disabled>
               Selecciona una opción
@@ -219,38 +214,35 @@ export function ContactForm() {
             ))}
           </select>
           {errors.interest ? (
-            <p id="interest-error" className="text-sm text-destructive">
-              {errors.interest}
-            </p>
+            <p className="text-sm text-destructive">{errors.interest}</p>
           ) : null}
         </div>
       </div>
 
       <div className="space-y-2">
-        <Label htmlFor="message">Cuéntanos sobre tu proyecto</Label>
+        <Label htmlFor="message" className="label-micro font-normal">
+          Cuéntanos sobre tu proyecto
+        </Label>
         <textarea
           id="message"
           name="message"
-          rows={6}
+          rows={5}
           value={values.message}
           onChange={(e) => update("message", e.target.value)}
           aria-invalid={!!errors.message}
-          aria-describedby={errors.message ? "message-error" : undefined}
-          className={cn(fieldClass, "min-h-36 py-2")}
+          className={cn(
+            "input-line min-h-32 resize-y",
+            errors.message && "border-destructive"
+          )}
           placeholder="Ubicación del predio, tipo de proyecto, tiempos aproximados…"
         />
         {errors.message ? (
-          <p id="message-error" className="text-sm text-destructive">
-            {errors.message}
-          </p>
+          <p className="text-sm text-destructive">{errors.message}</p>
         ) : null}
       </div>
 
       {status === "error" ? (
-        <p
-          className="border border-destructive/30 bg-destructive/5 px-4 py-3 text-sm text-destructive"
-          role="alert"
-        >
+        <p className="text-sm text-destructive" role="alert">
           No pudimos enviar el mensaje. Intenta de nuevo o escríbenos a{" "}
           <a href={`mailto:${siteConfig.contact.email}`} className="underline">
             {siteConfig.contact.email}
@@ -262,15 +254,10 @@ export function ContactForm() {
       <Button
         type="submit"
         disabled={status === "loading"}
-        className="h-12 rounded-none bg-[var(--ink)] px-8 text-[0.75rem] tracking-[0.16em] uppercase text-[var(--paper)] hover:bg-[var(--olive)]"
+        className="h-12 w-full rounded-none bg-[var(--ink)] text-[0.68rem] tracking-[0.2em] uppercase text-[var(--paper)] hover:bg-[var(--olive)] md:w-auto md:px-10"
       >
         {status === "loading" ? "Enviando…" : "Enviar consulta"}
       </Button>
-
-      <p className="text-xs text-[var(--quiet)]">
-        Este formulario funciona en modo local/mock. Reemplaza el endpoint cuando conectes tu
-        backend o CRM.
-      </p>
     </form>
   );
 }

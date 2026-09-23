@@ -50,14 +50,14 @@
 }
 
 :root {
-  /* Oaxaca material palette: volcanic stone, lime plaster, olive canopy — not cream/terracotta AI cliché */
-  --paper: #f2f1ec;
-  --mist: #e4e2db;
-  --ink: #171614;
-  --quiet: #5c5a54;
-  --olive: #3a4638;
-  --copper: #8a6145;
-  --line: color-mix(in oklab, var(--ink) 12%, transparent);
+  /* Cool limestone + volcanic ink + canopy olive — avoid cream/terracotta AI cluster */
+  --paper: #e9e7e1;
+  --mist: #ddd9d0;
+  --ink: #12110f;
+  --quiet: #5a5852;
+  --olive: #2f3b2d;
+  --copper: #7a5840;
+  --line: color-mix(in oklab, var(--ink) 14%, transparent);
 
   --background: var(--paper);
   --foreground: var(--ink);
@@ -81,8 +81,8 @@
   --chart-2: var(--copper);
   --chart-3: var(--ink);
   --chart-4: var(--mist);
-  --chart-5: #8a8f7e;
-  --radius: 0.25rem;
+  --chart-5: #7d816f;
+  --radius: 0;
   --sidebar: var(--paper);
   --sidebar-foreground: var(--ink);
   --sidebar-primary: var(--ink);
@@ -100,8 +100,8 @@
   body {
     @apply bg-background text-foreground antialiased;
     background-image:
-      radial-gradient(ellipse 80% 50% at 10% -10%, color-mix(in oklab, var(--olive) 8%, transparent), transparent),
-      radial-gradient(ellipse 60% 40% at 100% 0%, color-mix(in oklab, var(--copper) 6%, transparent), transparent);
+      radial-gradient(ellipse 90% 55% at 0% -5%, color-mix(in oklab, var(--olive) 10%, transparent), transparent 55%),
+      linear-gradient(180deg, color-mix(in oklab, var(--mist) 35%, transparent), transparent 28%);
     background-attachment: fixed;
   }
   html {
@@ -112,8 +112,11 @@
   h3,
   .font-display {
     font-family: var(--font-display), ui-serif, Georgia, serif;
-    font-weight: 450;
-    letter-spacing: -0.02em;
+    font-weight: 400;
+    letter-spacing: -0.03em;
+  }
+  ::selection {
+    background: color-mix(in oklab, var(--olive) 28%, transparent);
   }
 }
 
@@ -122,27 +125,42 @@
     font-family: var(--font-display), ui-serif, Georgia, serif;
   }
 
+  .label-micro {
+    font-size: 0.68rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--quiet);
+  }
+
   .animate-rise {
-    animation: rise 0.9s cubic-bezier(0.22, 1, 0.36, 1) both;
+    animation: rise 1s cubic-bezier(0.16, 1, 0.3, 1) both;
   }
 
   .animate-fade-in {
-    animation: fade-in 0.55s ease both;
+    animation: fade-in 0.6s ease both;
   }
 
   .animate-ken-slow {
-    animation: ken 18s ease-in-out infinite alternate;
+    animation: ken 22s ease-in-out infinite alternate;
+  }
+
+  .animate-line-grow {
+    animation: line-grow 1.1s cubic-bezier(0.16, 1, 0.3, 1) both;
   }
 
   .texture-grain {
-    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.45'/%3E%3C/svg%3E");
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.5'/%3E%3C/svg%3E");
+  }
+
+  .input-line {
+    @apply w-full border-0 border-b border-[var(--line)] bg-transparent px-0 py-3 text-sm outline-none transition-colors placeholder:text-[var(--quiet)]/55 focus-visible:border-[var(--ink)] rounded-none;
   }
 }
 
 @keyframes rise {
   from {
     opacity: 0;
-    transform: translateY(18px);
+    transform: translateY(22px);
   }
   to {
     opacity: 1;
@@ -161,9 +179,18 @@
 
 @keyframes ken {
   from {
-    transform: scale(1);
+    transform: scale(1) translate3d(0, 0, 0);
   }
   to {
-    transform: scale(1.06);
+    transform: scale(1.07) translate3d(-1.5%, 0, 0);
+  }
+}
+
+@keyframes line-grow {
+  from {
+    transform: scaleX(0);
+  }
+  to {
+    transform: scaleX(1);
   }
 }
