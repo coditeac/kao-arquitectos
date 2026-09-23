@@ -26,7 +26,7 @@ Abre [http://127.0.0.1:4321](http://127.0.0.1:4321).
 | --- | --- |
 | `npm run dev` | Servidor de desarrollo en el puerto **4321** |
 | `npm run build` | Build de producción |
-| `npm run start` | Servidor de producción (puerto 4321) |
+| `npm run start` | Servidor de producción (usa `PORT` del entorno) |
 | `npm run lint` | ESLint |
 
 ## Contenido editable
@@ -35,11 +35,24 @@ Abre [http://127.0.0.1:4321](http://127.0.0.1:4321).
 - SEO helpers y JSON-LD: `src/lib/seo.ts`
 - Formulario (mock): `src/app/api/contacto/route.ts`
 
-Variables opcionales:
+## Deploy (Railway — nativo, sin GitHub Actions)
 
-```bash
-NEXT_PUBLIC_SITE_URL=https://tu-dominio.mx
-```
+Este repo **no usa** `.github/workflows`. La producción se despliega con la integración nativa de Railway ↔ GitHub.
+
+1. Publica el código en GitHub (`main`).
+2. En [Railway](https://railway.com): **New Project → Deploy from GitHub repo**.
+3. Crea **solo** el environment **production** (no staging/preview).
+4. Conecta el servicio al branch **`main`** (watch branch = `main`).
+5. Variables recomendadas en production:
+
+| Variable | Valor |
+| --- | --- |
+| `NEXT_PUBLIC_SITE_URL` | URL pública final (ej. `https://….up.railway.app` o dominio custom) |
+| `NODE_ENV` | `production` (Railway suele fijarla) |
+
+Config local del repo: `railway.toml` + `nixpacks.toml`.
+
+Más detalle: ver notas de deploy en el store del proyecto (`docs/deploy-github-railway.md`).
 
 ## SEO
 
