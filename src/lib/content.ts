@@ -165,7 +165,7 @@ export const projects: Project[] = [
     result:
       "La casa respira otra vez: el patio organiza la vida diaria y las estancias ganan profundidad y claridad.",
     coverImage:
-      "https://images.unsplash.com/photo-1600047509807-ba8f99d36b1d?auto=format&fit=crop&w=1600&q=80",
+      "https://images.unsplash.com/photo-1600566753086-00f18fb6b3ea?auto=format&fit=crop&w=1600&q=80",
     gallery: [
       "https://images.unsplash.com/photo-1600210492486-724fe5c67fb0?auto=format&fit=crop&w=1400&q=80",
       "https://images.unsplash.com/photo-1600566753190-17f0baa2a6c3?auto=format&fit=crop&w=1400&q=80",
@@ -191,7 +191,7 @@ export const projects: Project[] = [
       "https://images.unsplash.com/photo-1613490493576-7fde63acd811?auto=format&fit=crop&w=1600&q=80",
     gallery: [
       "https://images.unsplash.com/photo-1600573472592-401b489a3cdc?auto=format&fit=crop&w=1400&q=80",
-      "https://images.unsplash.com/photo-1600607687644-c7171b42498b?auto=format&fit=crop&w=1400&q=80",
+      "https://images.unsplash.com/photo-1600607687920-4e2a09cf159d?auto=format&fit=crop&w=1400&q=80",
     ],
     featured: true,
   },
