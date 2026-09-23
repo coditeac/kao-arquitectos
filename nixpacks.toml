@@ -1,0 +1,6 @@
+# https://www.npmjs.com/package/nixpacks
+providers = ["node"]
+
+[variables]
+NODE_ENV = "production"
+NEXT_TELEMETRY_DISABLED = "1"

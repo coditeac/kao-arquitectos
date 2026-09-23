@@ -2,14 +2,23 @@
 
 import { useState, type FormEvent } from "react";
 import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { Textarea } from "@/components/ui/textarea";
 import { siteConfig } from "@/lib/content";
+import { cn } from "@/lib/utils";
 
 type Status = "idle" | "loading" | "success" | "error";
 
-type FieldErrors = Partial<Record<"name" | "email" | "phone" | "message" | "interest", string>>;
+type FieldErrors = Partial<
+  Record<"name" | "email" | "phone" | "message" | "interest", string>
+>;
+
+type FormValues = {
+  name: string;
+  email: string;
+  phone: string;
+  interest: string;
+  message: string;
+};
 
 const interests = [
   "Residencial de alto nivel",
@@ -20,31 +29,45 @@ const interests = [
   "Otro",
 ] as const;
 
-function validate(form: FormData): FieldErrors {
+const emptyValues: FormValues = {
+  name: "",
+  email: "",
+  phone: "",
+  interest: "",
+  message: "",
+};
+
+const fieldClass =
+  "h-11 w-full rounded-none border border-[var(--line)] bg-[var(--paper)] px-2.5 text-sm outline-none transition-colors placeholder:text-muted-foreground focus-visible:border-ring focus-visible:ring-3 focus-visible:ring-ring/50 aria-invalid:border-destructive aria-invalid:ring-3 aria-invalid:ring-destructive/20";
+
+function validate(values: FormValues): FieldErrors {
   const errors: FieldErrors = {};
-  const name = String(form.get("name") ?? "").trim();
-  const email = String(form.get("email") ?? "").trim();
-  const phone = String(form.get("phone") ?? "").trim();
-  const message = String(form.get("message") ?? "").trim();
-  const interest = String(form.get("interest") ?? "").trim();
-
-  if (name.length < 2) errors.name = "Indica tu nombre completo.";
-  if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) errors.email = "Correo no válido.";
-  if (phone.length < 8) errors.phone = "Incluye un teléfono o WhatsApp.";
-  if (!interest) errors.interest = "Selecciona un interés.";
-  if (message.length < 20) errors.message = "Cuéntanos un poco más (mín. 20 caracteres).";
-
+  if (values.name.trim().length < 2) errors.name = "Indica tu nombre completo.";
+  if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(values.email.trim())) {
+    errors.email = "Correo no válido.";
+  }
+  if (values.phone.trim().length < 8) {
+    errors.phone = "Incluye un teléfono o WhatsApp.";
+  }
+  if (!values.interest) errors.interest = "Selecciona un interés.";
+  if (values.message.trim().length < 20) {
+    errors.message = "Cuéntanos un poco más (mín. 20 caracteres).";
+  }
   return errors;
 }
 
 export function ContactForm() {
   const [status, setStatus] = useState<Status>("idle");
   const [errors, setErrors] = useState<FieldErrors>({});
+  const [values, setValues] = useState<FormValues>(emptyValues);
+
+  function update<K extends keyof FormValues>(key: K, value: FormValues[K]) {
+    setValues((prev) => ({ ...prev, [key]: value }));
+  }
 
   async function onSubmit(e: FormEvent<HTMLFormElement>) {
     e.preventDefault();
-    const form = new FormData(e.currentTarget);
-    const nextErrors = validate(form);
+    const nextErrors = validate(values);
     setErrors(nextErrors);
 
     if (Object.keys(nextErrors).length > 0) {
@@ -59,17 +82,17 @@ export function ContactForm() {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
-          name: form.get("name"),
-          email: form.get("email"),
-          phone: form.get("phone"),
-          interest: form.get("interest"),
-          message: form.get("message"),
+          name: values.name.trim(),
+          email: values.email.trim(),
+          phone: values.phone.trim(),
+          interest: values.interest,
+          message: values.message.trim(),
         }),
       });
 
       if (!res.ok) throw new Error("submit failed");
       setStatus("success");
-      e.currentTarget.reset();
+      setValues(emptyValues);
     } catch {
       setStatus("error");
     }
@@ -113,13 +136,15 @@ export function ContactForm() {
       <div className="grid gap-6 md:grid-cols-2">
         <div className="space-y-2">
           <Label htmlFor="name">Nombre</Label>
-          <Input
+          <input
             id="name"
             name="name"
             autoComplete="name"
+            value={values.name}
+            onChange={(e) => update("name", e.target.value)}
             aria-invalid={!!errors.name}
             aria-describedby={errors.name ? "name-error" : undefined}
-            className="h-11 rounded-none border-[var(--line)] bg-[var(--paper)]"
+            className={fieldClass}
             placeholder="Tu nombre"
           />
           {errors.name ? (
@@ -131,14 +156,16 @@ export function ContactForm() {
 
         <div className="space-y-2">
           <Label htmlFor="email">Correo</Label>
-          <Input
+          <input
             id="email"
             name="email"
             type="email"
             autoComplete="email"
+            value={values.email}
+            onChange={(e) => update("email", e.target.value)}
             aria-invalid={!!errors.email}
             aria-describedby={errors.email ? "email-error" : undefined}
-            className="h-11 rounded-none border-[var(--line)] bg-[var(--paper)]"
+            className={fieldClass}
             placeholder="tu@correo.com"
           />
           {errors.email ? (
@@ -152,14 +179,16 @@ export function ContactForm() {
       <div className="grid gap-6 md:grid-cols-2">
         <div className="space-y-2">
           <Label htmlFor="phone">Teléfono / WhatsApp</Label>
-          <Input
+          <input
             id="phone"
             name="phone"
             type="tel"
             autoComplete="tel"
+            value={values.phone}
+            onChange={(e) => update("phone", e.target.value)}
             aria-invalid={!!errors.phone}
             aria-describedby={errors.phone ? "phone-error" : undefined}
-            className="h-11 rounded-none border-[var(--line)] bg-[var(--paper)]"
+            className={fieldClass}
             placeholder="+52 951 000 0000"
           />
           {errors.phone ? (
@@ -174,10 +203,11 @@ export function ContactForm() {
           <select
             id="interest"
             name="interest"
-            defaultValue=""
+            value={values.interest}
+            onChange={(e) => update("interest", e.target.value)}
             aria-invalid={!!errors.interest}
             aria-describedby={errors.interest ? "interest-error" : undefined}
-            className="h-11 w-full rounded-none border border-[var(--line)] bg-[var(--paper)] px-2.5 text-sm outline-none focus-visible:border-ring focus-visible:ring-3 focus-visible:ring-ring/50"
+            className={fieldClass}
           >
             <option value="" disabled>
               Selecciona una opción
@@ -198,13 +228,15 @@ export function ContactForm() {
 
       <div className="space-y-2">
         <Label htmlFor="message">Cuéntanos sobre tu proyecto</Label>
-        <Textarea
+        <textarea
           id="message"
           name="message"
           rows={6}
+          value={values.message}
+          onChange={(e) => update("message", e.target.value)}
           aria-invalid={!!errors.message}
           aria-describedby={errors.message ? "message-error" : undefined}
-          className="min-h-36 rounded-none border-[var(--line)] bg-[var(--paper)]"
+          className={cn(fieldClass, "min-h-36 py-2")}
           placeholder="Ubicación del predio, tipo de proyecto, tiempos aproximados…"
         />
         {errors.message ? (
@@ -215,7 +247,10 @@ export function ContactForm() {
       </div>
 
       {status === "error" ? (
-        <p className="border border-destructive/30 bg-destructive/5 px-4 py-3 text-sm text-destructive" role="alert">
+        <p
+          className="border border-destructive/30 bg-destructive/5 px-4 py-3 text-sm text-destructive"
+          role="alert"
+        >
           No pudimos enviar el mensaje. Intenta de nuevo o escríbenos a{" "}
           <a href={`mailto:${siteConfig.contact.email}`} className="underline">
             {siteConfig.contact.email}
