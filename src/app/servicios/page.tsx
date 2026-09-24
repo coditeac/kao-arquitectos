@@ -11,13 +11,13 @@ export const metadata = createMetadata({
 
 export default function ServiciosPage() {
   return (
-    <div className="pt-28 md:pt-32">
-      <header className="mx-auto max-w-[90rem] px-5 pb-16 md:px-10 md:pb-20">
+    <div className="pt-32 md:pt-40">
+      <header className="mx-auto max-w-[90rem] px-5 pb-16 md:px-10 md:pb-24">
         <p className="label-micro">Servicios</p>
-        <h1 className="mt-4 max-w-4xl font-display text-[clamp(2.8rem,7vw,6rem)] leading-[0.95]">
+        <h1 className="mt-5 max-w-4xl text-[clamp(2.8rem,7vw,5.75rem)] font-semibold leading-[0.95] tracking-[-0.04em]">
           Oferta clara para proyectos exigentes
         </h1>
-        <p className="mt-7 max-w-2xl text-lg leading-relaxed text-[var(--quiet)]">
+        <p className="mt-8 max-w-2xl text-lg leading-relaxed text-[var(--quiet)]">
           Diseñamos y acompañamos residencias e interiores con un estándar alto
           de detalle. Cada servicio puede contratarse por fase o como proceso
           completo.

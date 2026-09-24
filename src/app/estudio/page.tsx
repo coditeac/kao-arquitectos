@@ -12,27 +12,29 @@ export const metadata = createMetadata({
 
 export default function EstudioPage() {
   return (
-    <div className="pt-28 md:pt-32">
-      <header className="mx-auto max-w-[90rem] px-5 pb-14 md:px-10 md:pb-16">
+    <div className="pt-32 md:pt-40">
+      <header className="mx-auto max-w-[90rem] px-5 pb-16 md:px-10 md:pb-20">
         <p className="label-micro">Estudio</p>
-        <h1 className="mt-4 max-w-4xl font-display text-[clamp(2.8rem,7vw,6rem)] leading-[0.95]">
+        <h1 className="mt-5 max-w-4xl text-[clamp(2.8rem,7vw,5.75rem)] font-semibold leading-[0.95] tracking-[-0.04em]">
           Un estudio pequeño, una mirada exigente
         </h1>
-        <p className="mt-7 max-w-2xl text-lg leading-relaxed text-[var(--quiet)]">
+        <p className="mt-8 max-w-2xl text-lg leading-relaxed text-[var(--quiet)]">
           KAO nace en Oaxaca para proyectar arquitectura contemporánea anclada al
           sitio: clima, materiales locales y una forma de vivir más clara.
         </p>
       </header>
 
-      <div className="relative aspect-[21/9] w-full overflow-hidden bg-[var(--mist)]">
-        <Image
-          src="https://images.unsplash.com/photo-1497366754035-f200968a6e72?auto=format&fit=crop&w=2400&q=80"
-          alt="Espacio de trabajo del estudio con luz natural"
-          fill
-          priority
-          sizes="100vw"
-          className="object-cover"
-        />
+      <div className="mx-auto max-w-[90rem] px-5 md:px-10">
+        <div className="relative aspect-[21/9] w-full overflow-hidden rounded-[1.5rem] bg-[var(--mist)] md:rounded-[2rem]">
+          <Image
+            src="https://images.unsplash.com/photo-1497366754035-f200968a6e72?auto=format&fit=crop&w=2400&q=80"
+            alt="Espacio de trabajo del estudio con luz natural"
+            fill
+            priority
+            sizes="100vw"
+            className="object-cover"
+          />
+        </div>
       </div>
 
       <section className="mx-auto grid max-w-[90rem] gap-12 px-5 py-24 md:grid-cols-12 md:px-10 md:py-28">

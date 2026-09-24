@@ -90,14 +90,15 @@
 }
 
 :root {
-  /* Palette from kaoarquitectos.com Elementor kit — terracotta used sparingly */
+  /* Palette from kaoarquitectos.com — terracotta restrained to CTAs */
   --paper: #f2efed;
   --mist: #e8e4e0;
   --ink: #212529;
   --quiet: #8a8a8a;
   --clay: #a86041;
   --lime: #cdd55a;
-  --line: color-mix(in oklab, var(--ink) 12%, transparent);
+  --line: color-mix(in oklab, var(--ink) 10%, transparent);
+  --media-radius: 1.35rem;
 
   --background: var(--paper);
   --foreground: var(--ink);
@@ -140,18 +141,11 @@
   body {
     @apply bg-background text-foreground antialiased;
     background-color: var(--paper);
-    background-image:
-      radial-gradient(
-        ellipse 80% 50% at 100% 0%,
-        color-mix(in oklab, var(--clay) 6%, transparent),
-        transparent 55%
-      ),
-      linear-gradient(
-        180deg,
-        color-mix(in oklab, var(--mist) 55%, transparent),
-        transparent 32%
-      );
-    background-attachment: fixed;
+    background-image: linear-gradient(
+      180deg,
+      color-mix(in oklab, var(--mist) 40%, transparent),
+      transparent 22%
+    );
   }
   html {
     @apply font-sans scroll-smooth;
@@ -175,10 +169,29 @@
   }
 
   .label-micro {
-    font-size: 0.68rem;
+    font-size: 0.65rem;
     letter-spacing: 0.2em;
     text-transform: uppercase;
     color: var(--quiet);
+  }
+
+  .section-pad {
+    @apply px-5 py-28 md:px-10 md:py-36;
+  }
+
+  .media-frame {
+    border-radius: var(--media-radius);
+    overflow: hidden;
+  }
+
+  @media (min-width: 768px) {
+    .media-frame {
+      border-radius: 1.75rem;
+    }
+  }
+
+  .link-quiet {
+    @apply text-[0.72rem] font-medium tracking-[0.16em] uppercase transition-opacity hover:opacity-55;
   }
 
   .animate-rise {
@@ -190,7 +203,7 @@
   }
 
   .animate-ken-slow {
-    animation: ken 22s ease-in-out infinite alternate;
+    animation: ken 28s ease-in-out infinite alternate;
   }
 
   .animate-line-grow {
@@ -202,15 +215,15 @@
   }
 
   .input-line {
-    @apply w-full rounded-none border-0 border-b border-[var(--line)] bg-transparent px-0 py-3 text-sm outline-none transition-colors placeholder:text-[var(--quiet)]/55 focus-visible:border-[var(--ink)];
+    @apply w-full rounded-none border-0 border-b border-[var(--line)] bg-transparent px-0 py-3.5 text-sm outline-none transition-colors placeholder:text-[var(--quiet)]/55 focus-visible:border-[var(--ink)];
   }
 
   .btn-clay {
-    @apply inline-flex items-center justify-center rounded-full bg-[var(--clay)] text-[0.72rem] font-semibold tracking-[0.14em] uppercase text-white transition-opacity hover:opacity-90;
+    @apply inline-flex items-center justify-center rounded-full bg-[var(--clay)] text-[0.72rem] font-semibold tracking-[0.14em] uppercase text-white transition-[opacity,transform] duration-300 hover:opacity-90 active:scale-[0.98];
   }
 
   .btn-ink {
-    @apply inline-flex items-center justify-center bg-[var(--ink)] text-[0.68rem] tracking-[0.2em] uppercase text-[var(--paper)] transition-colors hover:bg-[var(--clay)];
+    @apply inline-flex items-center justify-center rounded-full bg-[var(--ink)] text-[0.68rem] tracking-[0.18em] uppercase text-[var(--paper)] transition-colors duration-300 hover:bg-[var(--clay)];
   }
 }
 
@@ -239,7 +252,7 @@
     transform: scale(1) translate3d(0, 0, 0);
   }
   to {
-    transform: scale(1.07) translate3d(-1.5%, 0, 0);
+    transform: scale(1.06) translate3d(-1.2%, 0, 0);
   }
 }
 
@@ -249,5 +262,14 @@
   }
   to {
     transform: scaleX(1);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .animate-ken-slow,
+  .animate-rise,
+  .animate-line-grow,
+  .animate-fade-in {
+    animation: none !important;
   }
 }

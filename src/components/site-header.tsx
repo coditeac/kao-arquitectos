@@ -34,16 +34,16 @@ export function SiteHeader() {
   return (
     <header
       className={cn(
-        "fixed inset-x-0 top-0 z-50 border-b transition-[background,border-color,box-shadow] duration-400",
+        "fixed inset-x-0 top-0 z-50 border-b transition-[background,border-color,box-shadow] duration-500",
         scrolled || open
-          ? "border-[var(--line)] bg-[color-mix(in_oklab,var(--paper)_94%,transparent)] shadow-[0_1px_0_rgba(33,37,41,0.04)] backdrop-blur-md"
+          ? "border-[var(--line)] bg-[color-mix(in_oklab,var(--paper)_96%,transparent)] shadow-[0_1px_0_rgba(33,37,41,0.03)] backdrop-blur-md"
           : "border-transparent bg-[var(--paper)]"
       )}
     >
-      <div className="mx-auto flex h-[4.5rem] max-w-[90rem] items-center justify-between gap-4 px-5 md:h-[5.25rem] md:px-10">
+      <div className="mx-auto flex h-[4.75rem] max-w-[90rem] items-center justify-between gap-4 px-5 md:h-[5.5rem] md:px-10">
         <Link
           href="/"
-          className="relative shrink-0 transition-opacity hover:opacity-80"
+          className="relative shrink-0 transition-opacity duration-300 hover:opacity-75"
           aria-label={`${siteConfig.name} — inicio`}
         >
           <Image
@@ -57,7 +57,7 @@ export function SiteHeader() {
         </Link>
 
         <nav
-          className="absolute left-1/2 hidden -translate-x-1/2 items-center gap-8 lg:flex"
+          className="absolute left-1/2 hidden -translate-x-1/2 items-center gap-9 lg:flex"
           aria-label="Principal"
         >
           {navLinks.map((link) => {
@@ -68,7 +68,7 @@ export function SiteHeader() {
                 key={link.href}
                 href={link.href}
                 className={cn(
-                  "relative text-[0.78rem] font-medium tracking-[0.04em] text-[var(--ink)] transition-opacity hover:opacity-55",
+                  "relative text-[0.8rem] font-medium tracking-[0.02em] text-[var(--ink)] transition-opacity duration-300 hover:opacity-45",
                   active && "opacity-100"
                 )}
               >
@@ -84,7 +84,7 @@ export function SiteHeader() {
         <div className="flex items-center gap-3 md:gap-5">
           <a
             href={siteConfig.contact.phoneHref}
-            className="hidden text-[0.78rem] font-medium tracking-wide text-[var(--ink)] transition-opacity hover:opacity-55 xl:inline"
+            className="hidden text-[0.78rem] font-medium tracking-wide text-[var(--ink)]/80 transition-opacity hover:opacity-55 xl:inline"
           >
             {siteConfig.contact.phone}
           </a>
@@ -115,19 +115,19 @@ export function SiteHeader() {
           open ? "block animate-fade-in" : "hidden"
         )}
       >
-        <nav className="flex flex-col gap-1 px-5 py-8" aria-label="Móvil">
+        <nav className="flex flex-col gap-1 px-5 py-10" aria-label="Móvil">
           {navLinks.map((link) => (
             <Link
               key={link.href}
               href={link.href}
-              className="py-3 text-2xl font-semibold tracking-tight text-[var(--ink)]"
+              className="py-3.5 text-[1.85rem] font-semibold tracking-[-0.03em] text-[var(--ink)]"
             >
               {link.label}
             </Link>
           ))}
           <a
             href={siteConfig.contact.phoneHref}
-            className="mt-4 text-sm text-[var(--quiet)]"
+            className="mt-6 text-sm text-[var(--quiet)]"
           >
             {siteConfig.contact.phone}
           </a>
