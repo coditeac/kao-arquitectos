@@ -218,6 +218,11 @@
     @apply w-full rounded-none border-0 border-b border-[var(--line)] bg-transparent px-0 py-3.5 text-sm outline-none transition-colors placeholder:text-[var(--quiet)]/55 focus-visible:border-[var(--ink)];
   }
 
+  /* ReUI / shadcn underline field — from @reui/c-input-27 pattern */
+  .reui-underline {
+    @apply h-auto rounded-none border-x-0 border-t-0 border-b border-[var(--line)] bg-transparent px-0 py-3.5 text-sm shadow-none placeholder:text-[var(--quiet)]/55 focus-visible:border-[var(--ink)] focus-visible:ring-0;
+  }
+
   .btn-clay {
     @apply inline-flex items-center justify-center rounded-full bg-[var(--clay)] text-[0.72rem] font-semibold tracking-[0.14em] uppercase text-white transition-[opacity,transform] duration-300 hover:opacity-90 active:scale-[0.98];
   }

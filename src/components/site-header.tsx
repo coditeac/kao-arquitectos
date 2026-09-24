@@ -4,7 +4,16 @@ import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
-import { Menu, X } from "lucide-react";
+import { Menu } from "lucide-react";
+import { Button } from "@/components/ui/button";
+import {
+  Sheet,
+  SheetClose,
+  SheetContent,
+  SheetHeader,
+  SheetTitle,
+  SheetTrigger,
+} from "@/components/ui/sheet";
 import { navLinks, siteConfig } from "@/lib/content";
 import { cn } from "@/lib/utils";
 
@@ -23,13 +32,6 @@ export function SiteHeader() {
   useEffect(() => {
     setOpen(false);
   }, [pathname]);
-
-  useEffect(() => {
-    document.body.style.overflow = open ? "hidden" : "";
-    return () => {
-      document.body.style.overflow = "";
-    };
-  }, [open]);
 
   return (
     <header
@@ -88,53 +90,83 @@ export function SiteHeader() {
           >
             {siteConfig.contact.phone}
           </a>
-          <Link
-            href="/contacto"
-            className="btn-clay hidden h-10 px-5 lg:inline-flex"
+          <Button
+            variant="clay"
+            size="lg"
+            className="hidden h-10 px-5 text-[0.72rem] lg:inline-flex"
+            nativeButton={false}
+            render={<Link href="/contacto" />}
           >
             Contacto
-          </Link>
+          </Button>
 
-          <button
-            type="button"
-            className="inline-flex size-10 items-center justify-center text-[var(--ink)] lg:hidden"
-            aria-expanded={open}
-            aria-controls="mobile-nav"
-            aria-label={open ? "Cerrar menú" : "Abrir menú"}
-            onClick={() => setOpen((v) => !v)}
-          >
-            {open ? <X className="size-5" /> : <Menu className="size-5" />}
-          </button>
-        </div>
-      </div>
-
-      <div
-        id="mobile-nav"
-        className={cn(
-          "border-t border-[var(--line)] bg-[var(--paper)] lg:hidden",
-          open ? "block animate-fade-in" : "hidden"
-        )}
-      >
-        <nav className="flex flex-col gap-1 px-5 py-10" aria-label="Móvil">
-          {navLinks.map((link) => (
-            <Link
-              key={link.href}
-              href={link.href}
-              className="py-3.5 text-[1.85rem] font-semibold tracking-[-0.03em] text-[var(--ink)]"
+          <Sheet open={open} onOpenChange={setOpen}>
+            <SheetTrigger
+              render={
+                <Button
+                  variant="ghost"
+                  size="icon"
+                  className="lg:hidden"
+                  aria-label="Abrir menú"
+                />
+              }
             >
-              {link.label}
-            </Link>
-          ))}
-          <a
-            href={siteConfig.contact.phoneHref}
-            className="mt-6 text-sm text-[var(--quiet)]"
-          >
-            {siteConfig.contact.phone}
-          </a>
-          <Link href="/contacto" className="btn-clay mt-6 h-12 w-full">
-            Contacto
-          </Link>
-        </nav>
+              <Menu className="size-5" />
+            </SheetTrigger>
+            <SheetContent
+              side="right"
+              className="gap-0 p-0"
+              showCloseButton
+            >
+              <SheetHeader className="border-b border-[var(--line)] px-5 py-5 text-left">
+                <SheetTitle className="sr-only">Menú de navegación</SheetTitle>
+                <Image
+                  src="/brand/kao-logo-lockup.png"
+                  alt="KAO Arquitectos"
+                  width={180}
+                  height={30}
+                  className="h-7 w-auto"
+                />
+              </SheetHeader>
+              <nav
+                className="flex flex-1 flex-col gap-1 px-5 py-8"
+                aria-label="Móvil"
+              >
+                {navLinks.map((link) => (
+                  <SheetClose
+                    key={link.href}
+                    nativeButton={false}
+                    render={
+                      <Link
+                        href={link.href}
+                        className="py-3.5 text-[1.85rem] font-semibold tracking-[-0.03em] text-[var(--ink)]"
+                      />
+                    }
+                  >
+                    {link.label}
+                  </SheetClose>
+                ))}
+                <a
+                  href={siteConfig.contact.phoneHref}
+                  className="mt-6 text-sm text-[var(--quiet)]"
+                >
+                  {siteConfig.contact.phone}
+                </a>
+                <SheetClose
+                  nativeButton={false}
+                  render={
+                    <Link
+                      href="/contacto"
+                      className="btn-clay mt-6 inline-flex h-12 w-full items-center justify-center"
+                    />
+                  }
+                >
+                  Contacto
+                </SheetClose>
+              </nav>
+            </SheetContent>
+          </Sheet>
+        </div>
       </div>
     </header>
   );
