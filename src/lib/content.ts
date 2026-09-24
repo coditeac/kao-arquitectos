@@ -14,11 +14,11 @@ export const siteConfig = {
     geo: { lat: 17.0732, lng: -96.7266 },
   },
   contact: {
-    email: "contacto@kaoarquitectos.mx",
-    phone: "+52 951 516 2840",
-    phoneHref: "tel:+529515162840",
-    whatsapp: "+52 951 234 7812",
-    whatsappHref: "https://wa.me/529512347812",
+    email: "contacto@kaoarquitectos.com",
+    phone: "+52 951 610 7548",
+    phoneHref: "tel:+529516107548",
+    whatsapp: "+52 951 610 7548",
+    whatsappHref: "https://wa.me/529516107548",
     hours: "Lun–Vie 10:00–18:00",
   },
   social: {

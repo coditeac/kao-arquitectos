@@ -1,14 +1,23 @@
+import Image from "next/image";
 import Link from "next/link";
 import { navLinks, siteConfig } from "@/lib/content";
 
 export function SiteFooter() {
   return (
-    <footer className="border-t border-[var(--line)] bg-[var(--ink)] text-[var(--paper)]">
+    <footer className="border-t border-white/10 bg-[var(--ink)] text-[var(--paper)]">
       <div className="mx-auto grid max-w-[90rem] gap-14 px-5 py-16 md:grid-cols-12 md:px-10 md:py-20">
         <div className="md:col-span-5">
-          <p className="font-display text-4xl tracking-[0.04em]">KAO</p>
-          <p className="mt-4 max-w-sm text-sm leading-relaxed text-[var(--paper)]/60">
-            {siteConfig.tagline}. Arquitectura residencial y de interiores con
+          <Link href="/" aria-label={`${siteConfig.name} — inicio`}>
+            <Image
+              src="/brand/kao-logo-lockup-white.png"
+              alt="KAO Arquitectos"
+              width={220}
+              height={37}
+              className="h-9 w-auto opacity-95"
+            />
+          </Link>
+          <p className="mt-5 max-w-sm text-sm leading-relaxed text-[var(--paper)]/60">
+            {siteConfig.tagline}. Arquitectura, interiores y urbanismo con
             rigor técnico y mirada local.
           </p>
         </div>

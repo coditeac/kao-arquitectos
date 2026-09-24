@@ -254,7 +254,7 @@ export function ContactForm() {
       <Button
         type="submit"
         disabled={status === "loading"}
-        className="h-12 w-full rounded-none bg-[var(--ink)] text-[0.68rem] tracking-[0.2em] uppercase text-[var(--paper)] hover:bg-[var(--olive)] md:w-auto md:px-10"
+        className="btn-ink h-12 w-full md:w-auto md:px-10"
       >
         {status === "loading" ? "Enviando…" : "Enviar consulta"}
       </Button>

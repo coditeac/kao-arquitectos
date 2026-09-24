@@ -50,7 +50,7 @@ export default function ServiciosPage() {
                   {service.outcomes.map((item) => (
                     <li key={item} className="flex gap-3 text-sm">
                       <span
-                        className="mt-2 h-px w-5 shrink-0 bg-[var(--olive)]"
+                        className="mt-2 h-px w-5 shrink-0 bg-[var(--clay)]"
                         aria-hidden
                       />
                       {item}
@@ -74,7 +74,7 @@ export default function ServiciosPage() {
           </p>
           <Link
             href="/contacto"
-            className="mt-8 inline-flex h-12 items-center bg-[var(--ink)] px-6 text-[0.68rem] tracking-[0.2em] uppercase text-[var(--paper)] hover:bg-[var(--olive)]"
+            className="btn-ink mt-8 h-12 px-6"
           >
             Escribir al estudio
           </Link>

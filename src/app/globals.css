@@ -4,6 +4,46 @@
 
 @custom-variant dark (&:is(.dark *));
 
+@font-face {
+  font-family: "Switzer";
+  src:
+    url("/fonts/Switzer-Regular.woff2") format("woff2"),
+    url("/fonts/Switzer-Regular.woff") format("woff");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Switzer";
+  src:
+    url("/fonts/Switzer-Medium.woff2") format("woff2"),
+    url("/fonts/Switzer-Medium.woff") format("woff");
+  font-weight: 500;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Switzer";
+  src:
+    url("/fonts/Switzer-Semibold.woff2") format("woff2"),
+    url("/fonts/Switzer-Semibold.woff") format("woff");
+  font-weight: 600;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Switzer";
+  src:
+    url("/fonts/Switzer-Bold.woff2") format("woff2"),
+    url("/fonts/Switzer-Bold.woff") format("woff");
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
@@ -50,14 +90,14 @@
 }
 
 :root {
-  /* Cool limestone + volcanic ink + canopy olive — avoid cream/terracotta AI cluster */
-  --paper: #e9e7e1;
-  --mist: #ddd9d0;
-  --ink: #12110f;
-  --quiet: #5a5852;
-  --olive: #2f3b2d;
-  --copper: #7a5840;
-  --line: color-mix(in oklab, var(--ink) 14%, transparent);
+  /* Palette from kaoarquitectos.com Elementor kit — terracotta used sparingly */
+  --paper: #f2efed;
+  --mist: #e8e4e0;
+  --ink: #212529;
+  --quiet: #8a8a8a;
+  --clay: #a86041;
+  --lime: #cdd55a;
+  --line: color-mix(in oklab, var(--ink) 12%, transparent);
 
   --background: var(--paper);
   --foreground: var(--ink);
@@ -76,12 +116,12 @@
   --destructive: oklch(0.55 0.18 25);
   --border: var(--line);
   --input: var(--line);
-  --ring: var(--olive);
-  --chart-1: var(--olive);
-  --chart-2: var(--copper);
-  --chart-3: var(--ink);
+  --ring: var(--clay);
+  --chart-1: var(--clay);
+  --chart-2: var(--ink);
+  --chart-3: var(--quiet);
   --chart-4: var(--mist);
-  --chart-5: #7d816f;
+  --chart-5: var(--lime);
   --radius: 0;
   --sidebar: var(--paper);
   --sidebar-foreground: var(--ink);
@@ -90,7 +130,7 @@
   --sidebar-accent: var(--mist);
   --sidebar-accent-foreground: var(--ink);
   --sidebar-border: var(--line);
-  --sidebar-ring: var(--olive);
+  --sidebar-ring: var(--clay);
 }
 
 @layer base {
@@ -99,9 +139,18 @@
   }
   body {
     @apply bg-background text-foreground antialiased;
+    background-color: var(--paper);
     background-image:
-      radial-gradient(ellipse 90% 55% at 0% -5%, color-mix(in oklab, var(--olive) 10%, transparent), transparent 55%),
-      linear-gradient(180deg, color-mix(in oklab, var(--mist) 35%, transparent), transparent 28%);
+      radial-gradient(
+        ellipse 80% 50% at 100% 0%,
+        color-mix(in oklab, var(--clay) 6%, transparent),
+        transparent 55%
+      ),
+      linear-gradient(
+        180deg,
+        color-mix(in oklab, var(--mist) 55%, transparent),
+        transparent 32%
+      );
     background-attachment: fixed;
   }
   html {
@@ -111,18 +160,18 @@
   h2,
   h3,
   .font-display {
-    font-family: var(--font-display), ui-serif, Georgia, serif;
-    font-weight: 400;
+    font-family: var(--font-display), "Switzer", system-ui, sans-serif;
+    font-weight: 600;
     letter-spacing: -0.03em;
   }
   ::selection {
-    background: color-mix(in oklab, var(--olive) 28%, transparent);
+    background: color-mix(in oklab, var(--clay) 22%, transparent);
   }
 }
 
 @layer utilities {
   .font-display {
-    font-family: var(--font-display), ui-serif, Georgia, serif;
+    font-family: var(--font-display), "Switzer", system-ui, sans-serif;
   }
 
   .label-micro {
@@ -153,7 +202,15 @@
   }
 
   .input-line {
-    @apply w-full border-0 border-b border-[var(--line)] bg-transparent px-0 py-3 text-sm outline-none transition-colors placeholder:text-[var(--quiet)]/55 focus-visible:border-[var(--ink)] rounded-none;
+    @apply w-full rounded-none border-0 border-b border-[var(--line)] bg-transparent px-0 py-3 text-sm outline-none transition-colors placeholder:text-[var(--quiet)]/55 focus-visible:border-[var(--ink)];
+  }
+
+  .btn-clay {
+    @apply inline-flex items-center justify-center rounded-full bg-[var(--clay)] text-[0.72rem] font-semibold tracking-[0.14em] uppercase text-white transition-opacity hover:opacity-90;
+  }
+
+  .btn-ink {
+    @apply inline-flex items-center justify-center bg-[var(--ink)] text-[0.68rem] tracking-[0.2em] uppercase text-[var(--paper)] transition-colors hover:bg-[var(--clay)];
   }
 }
 

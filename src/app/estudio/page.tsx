@@ -105,7 +105,7 @@ export default function EstudioPage() {
         </ul>
         <Link
           href="/contacto"
-          className="mt-14 inline-flex h-12 items-center bg-[var(--ink)] px-6 text-[0.68rem] tracking-[0.2em] uppercase text-[var(--paper)] hover:bg-[var(--olive)]"
+          className="btn-ink mt-14 h-12 px-6"
         >
           Conversar con KAO
         </Link>

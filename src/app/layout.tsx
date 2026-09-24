@@ -1,22 +1,38 @@
 import type { Metadata } from "next";
-import { Fraunces, Sora } from "next/font/google";
+import type { CSSProperties } from "react";
+import localFont from "next/font/local";
 import { SiteFooter } from "@/components/site-footer";
 import { SiteHeader } from "@/components/site-header";
 import { siteConfig } from "@/lib/content";
 import { createMetadata, localBusinessJsonLd } from "@/lib/seo";
 import "./globals.css";
 
-const sora = Sora({
+const switzer = localFont({
+  src: [
+    {
+      path: "../../public/fonts/Switzer-Regular.woff2",
+      weight: "400",
+      style: "normal",
+    },
+    {
+      path: "../../public/fonts/Switzer-Medium.woff2",
+      weight: "500",
+      style: "normal",
+    },
+    {
+      path: "../../public/fonts/Switzer-Semibold.woff2",
+      weight: "600",
+      style: "normal",
+    },
+    {
+      path: "../../public/fonts/Switzer-Bold.woff2",
+      weight: "700",
+      style: "normal",
+    },
+  ],
   variable: "--font-sans",
-  subsets: ["latin"],
   display: "swap",
-});
-
-const fraunces = Fraunces({
-  variable: "--font-display",
-  subsets: ["latin"],
-  weight: ["400", "500", "600"],
-  display: "swap",
+  fallback: ["system-ui", "sans-serif"],
 });
 
 export const metadata: Metadata = {
@@ -31,13 +47,29 @@ export const metadata: Metadata = {
   authors: [{ name: siteConfig.name }],
   creator: siteConfig.name,
   category: "architecture",
+  icons: {
+    icon: [
+      { url: "/favicon.ico" },
+      { url: "/favicon-32.png", sizes: "32x32", type: "image/png" },
+      { url: "/favicon-48.png", sizes: "48x48", type: "image/png" },
+    ],
+    apple: [{ url: "/apple-touch-icon.png", sizes: "180x180" }],
+  },
 };
 
 export default function RootLayout({ children }: LayoutProps<"/">) {
   const jsonLd = localBusinessJsonLd();
 
   return (
-    <html lang="es-MX" className={`${sora.variable} ${fraunces.variable} h-full`}>
+    <html
+      lang="es-MX"
+      className={`${switzer.variable} h-full`}
+      style={
+        {
+          "--font-display": "var(--font-sans)",
+        } as CSSProperties
+      }
+    >
       <body className="flex min-h-full flex-col font-sans">
         <script
           type="application/ld+json"

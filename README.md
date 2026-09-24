@@ -11,6 +11,16 @@ Sitio web de marketing SEO-first para **KAO Arquitectos** — estudio de arquite
 - `/estudio` — Nosotros y proceso
 - `/contacto` — Formulario + datos de contacto (mock)
 
+## Marca
+
+Alineado visualmente con [kaoarquitectos.com](https://kaoarquitectos.com):
+
+- Logotipo oficial (lockup + marca)
+- Tipografía **Switzer** self-hosted
+- Paleta Elementor (`#F2EFED`, `#212529`, `#A86041` con uso contenido)
+
+Ver notas en el store del agente: `docs/brand-alignment-kao.md`.
+
 ## Desarrollo local
 
 ```bash

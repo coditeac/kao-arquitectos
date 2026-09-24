@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
@@ -13,7 +14,7 @@ export function SiteHeader() {
   const [scrolled, setScrolled] = useState(false);
 
   useEffect(() => {
-    const onScroll = () => setScrolled(window.scrollY > 16);
+    const onScroll = () => setScrolled(window.scrollY > 12);
     onScroll();
     window.addEventListener("scroll", onScroll, { passive: true });
     return () => window.removeEventListener("scroll", onScroll);
@@ -30,32 +31,33 @@ export function SiteHeader() {
     };
   }, [open]);
 
-  const onDarkHero = pathname === "/";
-  const light = scrolled || open || !onDarkHero;
-
   return (
     <header
       className={cn(
-        "fixed inset-x-0 top-0 z-50 transition-[background,border-color,backdrop-filter] duration-500",
-        light
-          ? "border-b border-[var(--line)] bg-[color-mix(in_oklab,var(--paper)_88%,transparent)] backdrop-blur-md"
-          : "border-b border-transparent bg-transparent"
+        "fixed inset-x-0 top-0 z-50 border-b transition-[background,border-color,box-shadow] duration-400",
+        scrolled || open
+          ? "border-[var(--line)] bg-[color-mix(in_oklab,var(--paper)_94%,transparent)] shadow-[0_1px_0_rgba(33,37,41,0.04)] backdrop-blur-md"
+          : "border-transparent bg-[var(--paper)]"
       )}
     >
-      <div className="mx-auto flex h-[4.25rem] max-w-[90rem] items-center justify-between px-5 md:h-20 md:px-10">
+      <div className="mx-auto flex h-[4.5rem] max-w-[90rem] items-center justify-between gap-4 px-5 md:h-[5.25rem] md:px-10">
         <Link
           href="/"
-          className={cn(
-            "font-display text-[1.65rem] leading-none tracking-[0.04em] transition-colors md:text-[1.85rem]",
-            light ? "text-[var(--ink)]" : "text-[var(--paper)]"
-          )}
+          className="relative shrink-0 transition-opacity hover:opacity-80"
           aria-label={`${siteConfig.name} — inicio`}
         >
-          KAO
+          <Image
+            src="/brand/kao-logo-lockup.png"
+            alt="KAO Arquitectos — Arquitectura · Interiores · Urbanismo"
+            width={216}
+            height={36}
+            priority
+            className="h-8 w-auto md:h-10"
+          />
         </Link>
 
         <nav
-          className="absolute left-1/2 hidden -translate-x-1/2 items-center gap-9 md:flex"
+          className="absolute left-1/2 hidden -translate-x-1/2 items-center gap-8 lg:flex"
           aria-label="Principal"
         >
           {navLinks.map((link) => {
@@ -66,42 +68,36 @@ export function SiteHeader() {
                 key={link.href}
                 href={link.href}
                 className={cn(
-                  "relative text-[0.72rem] tracking-[0.22em] uppercase transition-opacity hover:opacity-55",
-                  light ? "text-[var(--ink)]" : "text-[var(--paper)]",
+                  "relative text-[0.78rem] font-medium tracking-[0.04em] text-[var(--ink)] transition-opacity hover:opacity-55",
                   active && "opacity-100"
                 )}
               >
                 {link.label}
                 {active ? (
-                  <span
-                    className={cn(
-                      "absolute -bottom-2 left-0 h-px w-full origin-left animate-line-grow",
-                      light ? "bg-[var(--ink)]" : "bg-[var(--paper)]"
-                    )}
-                  />
+                  <span className="absolute -bottom-2 left-0 h-px w-full origin-left animate-line-grow bg-[var(--clay)]" />
                 ) : null}
               </Link>
             );
           })}
         </nav>
 
-        <div className="flex items-center gap-3">
+        <div className="flex items-center gap-3 md:gap-5">
+          <a
+            href={siteConfig.contact.phoneHref}
+            className="hidden text-[0.78rem] font-medium tracking-wide text-[var(--ink)] transition-opacity hover:opacity-55 xl:inline"
+          >
+            {siteConfig.contact.phone}
+          </a>
           <Link
             href="/contacto"
-            className={cn(
-              "hidden text-[0.72rem] tracking-[0.22em] uppercase transition-opacity hover:opacity-55 md:inline",
-              light ? "text-[var(--ink)]" : "text-[var(--paper)]"
-            )}
+            className="btn-clay hidden h-10 px-5 md:inline-flex"
           >
-            Agendar →
+            Contacto
           </Link>
 
           <button
             type="button"
-            className={cn(
-              "inline-flex size-10 items-center justify-center md:hidden",
-              light ? "text-[var(--ink)]" : "text-[var(--paper)]"
-            )}
+            className="inline-flex size-10 items-center justify-center text-[var(--ink)] lg:hidden"
             aria-expanded={open}
             aria-controls="mobile-nav"
             aria-label={open ? "Cerrar menú" : "Abrir menú"}
@@ -115,7 +111,7 @@ export function SiteHeader() {
       <div
         id="mobile-nav"
         className={cn(
-          "border-t border-[var(--line)] bg-[var(--paper)] md:hidden",
+          "border-t border-[var(--line)] bg-[var(--paper)] lg:hidden",
           open ? "block animate-fade-in" : "hidden"
         )}
       >
@@ -124,16 +120,19 @@ export function SiteHeader() {
             <Link
               key={link.href}
               href={link.href}
-              className="py-3 font-display text-3xl text-[var(--ink)]"
+              className="py-3 text-2xl font-semibold tracking-tight text-[var(--ink)]"
             >
               {link.label}
             </Link>
           ))}
-          <Link
-            href="/contacto"
-            className="mt-6 inline-flex h-12 items-center justify-center bg-[var(--ink)] text-[0.72rem] tracking-[0.2em] uppercase text-[var(--paper)]"
+          <a
+            href={siteConfig.contact.phoneHref}
+            className="mt-4 text-sm text-[var(--quiet)]"
           >
-            Agendar visita
+            {siteConfig.contact.phone}
+          </a>
+          <Link href="/contacto" className="btn-clay mt-6 h-12 w-full">
+            Contacto
           </Link>
         </nav>
       </div>
