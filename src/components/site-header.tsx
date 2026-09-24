@@ -90,7 +90,7 @@ export function SiteHeader() {
           </a>
           <Link
             href="/contacto"
-            className="btn-clay hidden h-10 px-5 md:inline-flex"
+            className="btn-clay hidden h-10 px-5 lg:inline-flex"
           >
             Contacto
           </Link>
